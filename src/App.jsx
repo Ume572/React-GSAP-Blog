@@ -15,21 +15,21 @@ function App() {
   const growingSpan = useRef(null);
   const [cursorImage, setCursorImage] = useState(null);
   const cursorImageRef = useRef(null);
- 
-useEffect(() => {
+
+  useEffect(() => {
     const locomotiveScroll = new LocomotiveScroll();  // Ye ek third-party JS library hai jo tumhare webpage ko smooth, inertia-based scrolling deta hai.
   }, []);
 
-  
+
   // jb bhi mai click krunga Umesh Chaudhary pr to mera background change ho jayega and chilly show hone lagenge
   // On Click - Background Change + Canvas Show
   useEffect(() => {
     const handleClick = (e) => {
-      
-        // jb first time click krunga umesh chaudhary pr to background change ho jayega red aa jayega chilly animated and canvas bhi
-        setShowCanvas((prevShowCanvas)=>{
+
+      // jb first time click krunga umesh chaudhary pr to background change ho jayega red aa jayega chilly animated and canvas bhi
+      setShowCanvas((prevShowCanvas) => {
         if (!prevShowCanvas) {
-         
+
           gsap.set(growingSpan.current, {
             top: e.clientY,
             left: e.clientX,
@@ -40,8 +40,8 @@ useEffect(() => {
             backgroundColor: "#fd2c2a",
             duration: 1.2,
             ease: "power2.inOut",
-          
-            
+
+
           });
 
           gsap.to(growingSpan.current, {
@@ -53,11 +53,11 @@ useEffect(() => {
                 scale: 0,
                 clearProps: "all",
               });
-              
+
             }
           });
 
-        //   // dubara background black krne ke liye jb click kru to
+          //   // dubara background black krne ke liye jb click kru to
         } else {
           gsap.to("body", {
             color: "#fff",
@@ -65,12 +65,12 @@ useEffect(() => {
             duration: 1.2,
             ease: "power2.inOut",
           });
-        
+
         }
-         return !prevShowCanvas;
-        });
-      };
-   
+        return !prevShowCanvas;
+      });
+    };
+
 
     const headingElement = headingref.current;
     headingElement.addEventListener("click", handleClick);
@@ -79,7 +79,7 @@ useEffect(() => {
     return () => headingElement.removeEventListener("click", handleClick);
   }, []);
 
-  
+
   // we use dependency array useEffect mtlb  is block ke andar ka code component mount hone ke baad ek baar chalega.
   useEffect(() => {
     const moveCursorImage = (e) => {
@@ -118,17 +118,17 @@ useEffect(() => {
     return () => window.removeEventListener("mousemove", moveCursor);
   }, []);
 
-  
+
 
   return (
     <>
-  
-     {cursorImage && (
+
+      {cursorImage && (
         <img
           ref={cursorImageRef}
           src={cursorImage}
           alt="Cursor Hover"
-          className="fixed w-80 h-80 object-cover rounded-full  pointer-events-none z-[999]"
+          className="fixed w-80 h-80 sm:w-60 sm:h-60 md:w-80 md:h-80 object-cover rounded-full  pointer-events-none z-[999]"
           style={{ top: 0, left: 0 }}
         />
       )}
@@ -142,12 +142,12 @@ useEffect(() => {
         {showCanvas &&
           data[0].map((canvasdets, index) => // // isme hmne  0th index mai jitne sare obj h wo mil gye & canvasDetails ko map kr diya share kr diya jisse ek ek img un sare obj ko mil gyi 
             <Canvas details={canvasdets} />)}
-            
-           
+
+
         <div className="w-full relative z-[1] h-screen ">
-          <nav className="w-full p-8 flex justify-between z-50">
-            <div className="brand text-2xl font-md text-green-500 ">Mern-Stack-Developer</div>
-            <div className="links flex gap-10">
+          <nav className="w-full px-4 py-4 sm:px-8 flex flex-wrap justify-between items-center">
+            <div className="brand text-xl sm:text-2xl font-md text-green-500 ">Mern-Stack-Developer</div>
+            <div className="links flex flex-col sm:flex-row gap-4 sm:gap-10 mt-4 sm:mt-0">
               {[
                 "Who am I",
                 "Dream Big",
@@ -157,16 +157,16 @@ useEffect(() => {
                 <a
                   key={index}
                   href={`#${link.toLowerCase()}`}
-                  className={`text-md hover:text-gray-300 ${link === "Believe in God" ? "text-pink-500" : link === "Who am I" ? "text-yellow-500" :"text-white"}`}
+                  className={`text-sm sm:text-md hover:text-gray-300 ${link === "Believe in God" ? "text-pink-500" : link === "Who am I" ? "text-yellow-500" : "text-white"}`}
                 >
                   {link}
                 </a>
               ))}
             </div>
           </nav>
-          <div className="textcontainer  w-full px-[20%]">
-            <div className="text w-[50%]">
-              <h3 className="text-4xl leading-[1.2]">
+          <div className="textcontainer  w-full px-4 sm:px-[10%] md:px-[15%] lg:px-[20%]">
+            <div className="text w-full sm:w-[90%] md:w-[60%] lg:w-[50%]">
+              <h3 className="text-2xl sm:text-3xl md:text-4xl leading-snug">
                 <span
                   className="text-yellow-300"
                   onMouseEnter={() =>
@@ -180,12 +180,12 @@ useEffect(() => {
                 <br /> <span className="text-pink-700">D</span>ream - <span className="text-blue-700">B</span>elieve - <span className="text-yellow-900">A</span>chieve.
                 <br /><span className="text-green-700">N</span>ever give up.
               </h3>
-              <p className="text-lg w-[80%] mt-10 font-normal">
+              <p className="text-sm sm:text-base md:text-lg w-full sm:w-[90%] md:w-[80%] mt-6 font-normal">
                 I am a <span className="text-green-300">designers,</span> developers, and strategists who are
                 passionate about creating digital experiences that are both
                 beautiful and functional.
               </p>
-              <p className="text-md mt-10 text-pink-600">
+              <p className="text-sm sm:text-md mt-6 text-pink-600">
                 Problem-Solving in - {" "}
                 <span className="text-blue-500">JAVA, C/C++ & JavaScript</span>
               </p>
@@ -195,7 +195,7 @@ useEffect(() => {
           <div className="w-full absolute bottom-0 left-0">
             <h1
               ref={headingref}
-              className="text-[10vw] sm:text-[12rem] font-normal tracking-tight leading-none text-center w-full px-5 overflow-hidden"
+              className="text-[10vw] sm:text-[6rem] md:text-[7rem] lg:text-[10rem] xl:text-[12rem] font-normal tracking-tight leading-tight break-words w-full px-4 sm:px-6 md:px-10 overflow-hidden"
             >
               <span
                 className="text-white-800"
